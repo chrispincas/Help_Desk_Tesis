@@ -1,0 +1,60 @@
+{
+  "sites":[
+    {
+      "site": "",
+      "access": "public",
+      "role": ""
+    },
+    {
+      "site": "signup",
+      "access": "public",
+      "role": ""
+    },
+    {
+      "site": "dashboard",
+      "access": "private",
+      "role": "Administrador"
+    },
+    {
+      "site": "dashboard",
+      "access": "private",
+      "role": "Soporte"
+    },
+    {
+      "site": "dashboard",
+      "access": "private",
+      "role": "Usuario Interno"
+    },
+    {
+      "site": "dashboard",
+      "access": "private",
+      "role": "Usuario Externo"
+    },
+    {
+      "site": "tickets",
+      "access": "private",
+      "role": "Administrador"
+    },
+    {
+      "site": "tickets",
+      "access": "private",
+      "role": "Soporte"
+    },
+    {
+      "site": "tickets",
+      "access": "private",
+      "role": "Usuario Interno"
+    },
+    {
+      "site": "tickets",
+      "access": "private",
+      "role": "Usuario Externo"
+    }
+  ],
+  "default-sites":{
+    "Administrador": "dashboard",
+    "Soporte": "dashboard",
+    "Usuario Interno": "dashboard",
+    "Usuario Externo": "dashboard"
+  }
+}
