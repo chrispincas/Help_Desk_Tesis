@@ -1,0 +1,2 @@
+[23-May-2022 23:10:08 America/Bogota] PHP Notice:  Undefined offset: 2 in /var/www/html/classes/sessioncontroller.php on line 161
+[23-May-2022 23:10:55 America/Bogota] PHP Notice:  Undefined offset: 2 in /var/www/html/classes/sessioncontroller.php on line 161

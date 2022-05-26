@@ -31,7 +31,7 @@
 				</li>
 
 				<?php if($user->getRoleId()==1):?>
-				<li class="sidebar-item <?php loadMenuClassActive(["Usuarios"],$title)?>">
+				<li class="sidebar-item <?php loadMenuClassActive(["Usuarios", "Agregar Usuario", "Ver Usuario"],$title)?>">
 					<a href="<?php echo URL ?>/users" class='sidebar-link'>
 						<i class="bi bi-person-circle"></i>
 						<span>Usuarios</span>

@@ -8,7 +8,9 @@ class UserModel extends Model implements IModel{
   private $password;
   private $status;
   private $groupId;
+  private $groupName;
   private $roleId;
+  private $roleName;
   private $createdAt;
   private $modifiedAt;
 
@@ -26,7 +28,7 @@ class UserModel extends Model implements IModel{
   
   public function save(){
     try{
-      $query=$this->prepare('INSERT INTO user(name, email, password, status, role_id, created_at, modified_at) values(?, ? ,?, ?, ?, ?, ?, ?)');
+      $query=$this->prepare('INSERT INTO user(name, email, password, status, group_id, role_id, created_at, modified_at) values(?,?,?,?,?,?,?,?)');
       $query->bindParam(1, $this->name);
       $query->bindParam(2, $this->email);
       $query->bindParam(3, $this->password);
@@ -46,10 +48,19 @@ class UserModel extends Model implements IModel{
   public function getAll(){
     try{
       $items = [];
-      $query=$this->query('SELECT * FROM user');
+      $query=$this->query('SELECT u.id, u.name, u.email, u.status, u.created_at, u.modified_at, gu.group_name, r.role FROM user u 
+      LEFT JOIN group_user gu ON(u.group_id = gu.id)
+      LEFT JOIN rol r ON(u.role_id = r.id)');
       while($p=$query->fetch(PDO::FETCH_ASSOC)){
         $item = new userModel();
-        $item->from($p);
+        $item->setId($p['id']);
+        $item->setName($p['name']);
+        $item->setEmail($p['email']);
+        $item->setStatus($p['status']);
+        $item->setCreatedAt($p['created_at']);
+        $item->setModifiedAt($p['modified_at']);
+        $item->setGroupName($p['group_name']);
+        $item->setRoleName($p['role']);
         array_push($items,$item);
       }
       
@@ -114,16 +125,15 @@ class UserModel extends Model implements IModel{
 
   public function update(){
     try{
-      $query=$this->prepare('UPDATE user SET id=?, name=?, email=?, password=?, status=?, group_id=?, role_id=?, created_at=?, modified_at=? WHERE id=:id');
-      $query->bindParam(1, $this->id);
-      $query->bindParam(2, $this->name);
-      $query->bindParam(3, $this->email);
-      $query->bindParam(4, $this->password);
-      $query->bindParam(5, $this->status);
-      $query->bindParam(6, $this->groupId);
-      $query->bindParam(7, $this->roleId);
-      $query->bindParam(8, $this->createdAt);
-      $query->bindParam(9, $this->modifiedAt);
+      $query=$this->prepare('UPDATE user SET name=?, email=?, password=?, status=?, group_id=?, role_id=?, modified_at=? WHERE id=:id');
+      $query->bindParam(1, $this->name);
+      $query->bindParam(2, $this->email);
+      $query->bindParam(3, $this->password);
+      $query->bindParam(4, $this->status);
+      $query->bindParam(5, $this->groupId);
+      $query->bindParam(6, $this->roleId);
+      $query->bindParam(7, $this->modifiedAt);
+      $query->bindParam(8, $this->id);
       $query->execute();
       return true;
 
@@ -201,6 +211,16 @@ class UserModel extends Model implements IModel{
     }
   }
 
+  public function generatePassword($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+  }
+
   private function getHashPassword($password){
     return password_hash($password, PASSWORD_DEFAULT, ['cost' => 10]);
   }
@@ -261,12 +281,28 @@ class UserModel extends Model implements IModel{
     $this->groupId=$groupId;
   }
 
+  public function getGroupName(){
+    return $this->groupName;
+  }
+
+  public function setGroupName($groupName){
+    $this->groupName=$groupName;
+  }
+
   public function getRoleId(){
     return $this->roleId;
   }
   
   public function setRoleId($roleId){
     $this->roleId=$roleId;
+  }
+
+  public function getRoleName(){
+    return $this->roleName;
+  }
+
+  public function setRoleName($roleName){
+    $this->roleName=$roleName;
   }
 
   public function getCreatedAt(){

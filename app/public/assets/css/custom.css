@@ -65,7 +65,3 @@ body{
 #main #main-content {
   padding: 0 2rem;
 }
-
-.form-group[class*=has-icon-] .form-control-icon{
-  top: 42%;
-}

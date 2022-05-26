@@ -49,6 +49,11 @@
       "site": "tickets",
       "access": "private",
       "role": "Usuario Externo"
+    },
+    {
+      "site": "users",
+      "access": "private",
+      "role": "Administrador"
     }
   ],
   "default-sites":{
