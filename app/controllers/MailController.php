@@ -33,7 +33,7 @@ class MailController extends SessionController{
 		$mail->Host = $this->host;
 		$mail->Port = $this->port;
 		$mail->SMTPSecure = $this->ssl;
-		$mail->SMTPAuth = true;
+		$mail->SMTPAuth = TRUE;
 		$mail->Username = $this->username;
 		$mail->Password = $this->password;
 		$mail->setFrom($this->from);

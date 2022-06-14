@@ -5,18 +5,21 @@ class SubcategoryModel extends Model implements IModel{
 	private $id;
 	private $subcategory;
 	private $categoryId;
+	private $description;
 
 	public function __construct(){
 		parent::__construct();
 		$subcategory = "";
 		$categoryId = 0;
+		$description = "";
 	}
 
 	public function save(){
 		try{
-			$query=$this->prepare('INSERT INTO subcategory(subcategory, category_id) values(?, ?)');
+			$query=$this->prepare('INSERT INTO subcategory(subcategory, category_id, description) values(?,?,?)');
 			$query->bindParam(1, $this->subcategory);
 			$query->bindParam(2, $this->categoryId);
+			$query->bindParam(3, $this->description);
 			$query->execute();
 			return true;
 		}catch(PDOException $e){
@@ -76,10 +79,11 @@ class SubcategoryModel extends Model implements IModel{
 
 	public function update(){
 		try{
-			$query=$this->prepare('UPDATE subcategory SET subcategory=?, category_id=? WHERE id=?');
+			$query=$this->prepare('UPDATE subcategory SET subcategory=?, category_id=?, description=? WHERE id=?');
 			$query->bindParam(1, $this->subcategory);
 			$query->bindParam(2, $this->categoryId);
-			$query->bindParam(3, $this->id);
+			$query->bindParam(3, $this->description);
+			$query->bindParam(4, $this->id);
 			$query->execute();
 			return true;
 		}catch(PDOException $e){

@@ -7,7 +7,7 @@ class CategoryModel extends Model implements IModel{
 
 	public function __construct(){
 		parent::__construct();
-		$category = "";
+		$this->category = "";
 	}
 
 	public function save(){

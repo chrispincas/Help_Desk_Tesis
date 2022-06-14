@@ -1,2 +1,24 @@
-[23-May-2022 23:10:08 America/Bogota] PHP Notice:  Undefined offset: 2 in /var/www/html/classes/sessioncontroller.php on line 161
-[23-May-2022 23:10:55 America/Bogota] PHP Notice:  Undefined offset: 2 in /var/www/html/classes/sessioncontroller.php on line 161
+[13-Jun-2022 22:43:47 America/Bogota] PHP Notice:  Undefined index: user in /var/www/html/classes/session.php on line 18
+[13-Jun-2022 22:43:47 America/Bogota] userModel::get->Failed:  no se encuentra en sistema
+[13-Jun-2022 22:43:47 America/Bogota] No existe usuario
+[13-Jun-2022 22:43:47 America/Bogota] PHP Notice:  Undefined offset: 2 in /var/www/html/classes/sessioncontroller.php on line 161
+[13-Jun-2022 22:44:01 America/Bogota] PHP Notice:  Undefined index: user in /var/www/html/classes/session.php on line 18
+[13-Jun-2022 22:44:01 America/Bogota] userModel::get->Failed:  no se encuentra en sistema
+[13-Jun-2022 22:44:01 America/Bogota] Existe usuario
+[13-Jun-2022 22:44:01 America/Bogota] PHP Notice:  Undefined offset: 2 in /var/www/html/classes/sessioncontroller.php on line 161
+[13-Jun-2022 22:45:00 America/Bogota] PHP Notice:  Undefined offset: 2 in /var/www/html/classes/sessioncontroller.php on line 161
+[13-Jun-2022 22:45:03 America/Bogota] PHP Notice:  Undefined index: user in /var/www/html/classes/session.php on line 18
+[13-Jun-2022 22:45:03 America/Bogota] userModel::get->Failed:  no se encuentra en sistema
+[13-Jun-2022 22:45:03 America/Bogota] No existe usuario
+[13-Jun-2022 22:45:03 America/Bogota] PHP Notice:  Undefined offset: 2 in /var/www/html/classes/sessioncontroller.php on line 161
+[13-Jun-2022 22:45:56 America/Bogota] PHP Notice:  Undefined offset: 2 in /var/www/html/classes/sessioncontroller.php on line 161
+[13-Jun-2022 22:45:59 America/Bogota] PHP Notice:  Undefined index: user in /var/www/html/classes/session.php on line 18
+[13-Jun-2022 22:45:59 America/Bogota] userModel::get->Failed:  no se encuentra en sistema
+[13-Jun-2022 22:45:59 America/Bogota] No existe usuario
+[13-Jun-2022 22:46:22 America/Bogota] PHP Notice:  Undefined index: user in /var/www/html/classes/session.php on line 18
+[13-Jun-2022 22:46:22 America/Bogota] userModel::get->Failed:  no se encuentra en sistema
+[13-Jun-2022 22:46:24 America/Bogota] PHP Notice:  Undefined offset: 2 in /var/www/html/classes/sessioncontroller.php on line 161
+[13-Jun-2022 22:46:48 America/Bogota] PHP Notice:  Undefined offset: 2 in /var/www/html/classes/sessioncontroller.php on line 161
+[13-Jun-2022 22:46:57 America/Bogota] PHP Notice:  Undefined offset: 2 in /var/www/html/classes/sessioncontroller.php on line 161
+[13-Jun-2022 22:47:17 America/Bogota] PHP Notice:  Undefined offset: 2 in /var/www/html/classes/sessioncontroller.php on line 161
+[13-Jun-2022 22:47:27 America/Bogota] PHP Notice:  Undefined offset: 2 in /var/www/html/classes/sessioncontroller.php on line 161

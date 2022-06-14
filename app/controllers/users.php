@@ -38,22 +38,31 @@ class Users extends SessionController{
     ]);
   }
 
-  function edit(){
-    if($this->existGET(['id'])){
+  function showUser(){
+    if($this->existGET(["id"])){
       $id = $this->getGet('id');
-      $this->view->render('users/edit',[
-        'user'=>$this->user,
-        'reseller'=>$this->users->get($id),
-        'list_users'=>$this->users->getAll()
-      ]);
-    }else{
-      $this->redirect('users/add', ['error' => ErrorMessages::ERROR_SIGNUP_POST]);
+      if(!$this->users->get($id)){
+        $this->redirect('users', ['error' => ErrorMessages::ERROR_USERS_GET]);
+      }else{
+        if($this->user->getRoleId() <= 2){
+          $this->view->render('users/show',[
+            'user'=>$this->user,
+            'user_edit'=>$this->users->get($id),
+            'role'=>$this->role->get($this->user->getRoleId()),
+            'roles'=>$this->rol->getAll(),
+            'groups'=>$this->group->getAll()
+          ]);
+        }else{
+          $this->redirect('tickets', ['error' => ErrorMessages::ERROR_TICKETS_SHOWTICKET_PERMISSION]);
+        }
+      } 
     }
   }
 
   function newUser(){
-    if($this->existPOST(['name' , 'email', 'groupId', 'roleId'])){
+    if($this->existPOST(['employeeId','name' , 'email', 'groupId', 'roleId'])){
       
+      $employeeId = $this->getPost('employeeId');
       $name = $this->getPost('name');
       $email = $this->getPost('email');
       $status = 1;
@@ -63,12 +72,13 @@ class Users extends SessionController{
       $modifiedAt = date('Y-m-d H:i:s');
       
       //validate data
-      if($name == '' || $email == '' || $groupId == '' || $roleId == ''){
+      if($employeeId == '' || $name == '' || $email == '' || $groupId == '' || $roleId == ''){
           $this->redirect('users/add', ['error' => ErrorMessages::ERROR_SIGNUP_NEWUSER_EMPTY]);
       }else{
         $password = $this->users->generatePassword(8);
 
         $user = new UserModel();
+        $user->setEmployeeId($employeeId);
         $user->setName($name);
         $user->setEmail($email);
         $user->setStatus($status);
@@ -100,34 +110,112 @@ class Users extends SessionController{
   }
 
   function updateUser(){
-    if($this->existPOST(['id', 'identificacion', 'correo', 'telefono','ubicacion', 'padre_id', 'role', 'estado'])){
+    if($this->existPOST(['id', 'employeeId', 'name', 'email', 'groupId', 'roleId', 'status'])){
       $id = $this->getPost('id');
-      $identificacion = $this->getPost('identificacion');
-      $nombre = $this->getPost('nombre');
-      $correo = $this->getPost('correo');
-      $telefono = $this->getPost('telefono');
-      $ubicacion = $this->getPost('ubicacion');
-      $padre_id = $this->getPost('padre_id');
-      $role = $this->getPost('role');
-      $estado = $this->getPost('estado');
+      $employeeId = $this->getPost('employeeId');
+      $name = $this->getPost('name');
+      $email = $this->getPost('email');
+      $groupId = $this->getPost('groupId');
+      $roleId = $this->getPost('roleId');
+      $status = $this->getPost('status');
       
-      $this->users->setId($id);
-      $this->users->setIdentificacion($identificacion);
-      $this->users->setNombre($nombre);
-      $this->users->setCorreo($correo);
-      $this->users->setTelefono($telefono);
-      $this->users->setUbicacion($ubicacion);
-      $this->users->setPadre_id($padre_id);
-      $this->users->setRole($role);
-      $this->users->setEstado($estado);
+      $user = new UserModel();
+      $user->setId($id);
+      $user->setEmployeeId($employeeId);
+      $user->setName($name);
+      $user->setEmail($email);
+      $user->setGroupId($groupId);
+      $user->setRoleId($roleId);
+      $user->setStatus($status);
+      $user->setModifiedAt(date('Y-m-d H:i:s'));
 
-      if($this->users->update()){
+      if($user->update()){
         $this->redirect('users',['success' => SuccessMessages::SUCCESS_USERS_UPDATE]);
       }else{
         $this->redirect('users', ['error' => ErrorMessages::ERROR_SIGNUP_POST]);
       }
     }else{
       $this->redirect('users', ['error' => ErrorMessages::ERROR_SIGNUP_POST]);
+    }
+  }
+
+  function updateProfile(){
+    if($this->existPOST(['id', 'name', 'email'])){
+      $id = $this->getPost('id');
+      $name = $this->getPost('name');
+      $email = $this->getPost('email');
+      
+      $user = new UserModel();
+      $user->setId($id);
+      $user->setName($name);
+      $user->setEmail($email);
+      $user->setModifiedAt(date('Y-m-d H:i:s'));
+      
+      
+      if($user->updateProfile()){
+        $this->redirect('profile',['success' => SuccessMessages::SUCCESS_USERS_UPDATE]);
+      }else{
+        $this->redirect('profile', ['error' => ErrorMessages::ERROR_SIGNUP_POST]);
+      }
+    }else{
+      $this->redirect('profile', ['error' => ErrorMessages::ERROR_SIGNUP_POST]);
+    }
+  }
+
+  function updatePassword(){
+    if($this->existPOST(['id', 'password', 'password2'])){
+      $id = $this->getPost('id');
+      $password = $this->getPost('password');
+      $password2 = $this->getPost('password2');
+      
+      if($password!=$password2){
+        $this->redirect('profile', ['error' => ErrorMessages::ERROR_USERS_UPDATEPASSWORD_MATCH]);
+      }
+
+      $user = new UserModel();
+      $user->setId($id);
+      $user->setPassword($password);
+      $user->setModifiedAt(date('Y-m-d H:i:s'));
+
+      if($user->updatePassword()){
+        $this->redirect('profile',['success' => SuccessMessages::SUCCESS_USERS_UPDATE]);
+      }else{
+        $this->redirect('profile', ['error' => ErrorMessages::ERROR_SIGNUP_POST]);
+      }
+    }else{
+      $this->redirect('profile', ['error' => ErrorMessages::ERROR_SIGNUP_POST]);
+    }
+  }
+
+  function recoveryPassword(){
+    if($this->existPOST(['email'])){
+      $password = $this->users->generatePassword(8);
+
+      $email = $this->getPost('email');
+      $user = new UserModel();
+      if($user->exists($email)){
+        $user->setEmail($email);
+        $user->setPassword($password);
+        $user->setModifiedAt(date('Y-m-d H:i:s'));
+  
+        if($user->recoveryPassword()){
+          $html = file_get_contents("templates/recoveryPassword.html");
+          $html = str_replace("{user}", $email, $html);
+          $html = str_replace("{password}", $password, $html);
+          $sendMail = $this->mail->sendMail($email, "Usuario y clave restablecida en sistema: ", $html);
+          if($sendMail){
+            $this->redirect('',['success' => SuccessMessages::SUCCESS_USERS_RECOVERYPASSWORD]);
+          }else{
+            $this->redirect('', ['error' => ErrorMessages::ERROR_TICKETS_NEWTICKET_SENDMAIL]);
+          }  
+        }else{
+          $this->redirect('', ['error' => ErrorMessages::ERROR_USERS_RECOVERYPASSWORD]);
+        } 
+      }else{
+        $this->redirect('', ['error' => ErrorMessages::ERROR_USER_NOT_EXISTS]);
+      }
+    }else{
+      $this->redirect('', ['error' => ErrorMessages::ERROR_SIGNUP_POST]);
     }
   }
 

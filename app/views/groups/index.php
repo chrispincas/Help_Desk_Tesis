@@ -1,9 +1,9 @@
 <?php
 $user = $this->d['user'];
+$groups = $this->d['groups'];
 $role = $this->d['role'];
-$users = $this->d['users'];
 
-$title = "Usuarios";
+$title = "Grupos";
 $bodyType = "";
 //Array of additional js files to be loaded
 $jsAdditional = [
@@ -30,7 +30,7 @@ require_once 'views/header.php';
 
 			<div class="page-heading">
 				<h3>
-					Módulo Usuarios
+					Módulo Grupos
 				</h3>
 			</div>
 			<div class="page-content">
@@ -38,40 +38,24 @@ require_once 'views/header.php';
 					<?php $this->showMessages(); ?>
 					<div class="card">
 						<div class="header-card pt-4 px-3">
-							<a href="<?php echo URL ?>/users/add" class="btn btn-success">Agregar Usuario</a>
+							<a href="<?php echo URL ?>/groups/add" class="btn btn-success">Agregar Grupo</a>
 						</div>
 						<div class="body-card px-3 py-3">
 							<table class="table table-striped mt-3" id="table">
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>Nombre</th>
-										<th>Código</th>
-										<th>Email</th>
 										<th>Grupo</th>
-										<th>Rol</th>
-										<th>Estado</th>
 										<th>Acción</th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($users as $u) : ?>
+									<?php foreach ($groups as $g) : ?>
 										<tr>
-											<td><?php echo $u->getId() ?></td>
-											<td><?php echo $u->getName() ?></td>
-											<td><?php echo $u->getEmployeeId() ?></td>
-											<td><?php echo $u->getEmail() ?></td>
-											<td><?php echo $u->getGroupName() ?></td>
-											<td><?php echo $u->getRoleName() ?></td>
+											<td><?php echo $g->getId() ?></td>
+											<td><?php echo $g->getGroup() ?></td>
 											<td>
-												<?php if($u->getStatus() == "0"):?>
-													<span class="badge bg-danger">Inactivo</span>
-												<?php else: ?>
-													<span class="badge bg-success">Activo</span>
-												<?php endif; ?>
-											</td>
-											<td>
-												<a href="<?php echo URL ?>/users/showUser?id=<?php echo $u->getId() ?>" class="btn btn-primary">
+												<a href="<?php echo URL ?>/groups/showGroup?id=<?php echo $g->getId() ?>" class="btn btn-primary">
 													<i class="bi bi-eye"></i>
 												</a>
 											</td>

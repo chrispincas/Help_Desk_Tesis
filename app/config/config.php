@@ -18,8 +18,8 @@ define('PASSWORD', 'Salo2022.');
 define('CHARSET', 'utf8');
 
 define('HOST_SMTP', 'smtp.gmail.com');
-define('USER_SMTP', 'noc@wificolombia.net');
-define('PASS_SMTP', 'WiFiCol0713');
+define('USER_SMTP', 'joansalomon@gmail.com');
+define('PASS_SMTP', 'jksnextezrzzaiyf');
 define('PORT_SMTP', 465);
 define('SSL_SMTP', 'ssl');
 define('MAIL_FROM', 'noreply@totalsolution.com.co')

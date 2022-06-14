@@ -30,13 +30,19 @@
 					</a>
 				</li>
 
-				<?php if($user->getRoleId()==1):?>
-				<li class="sidebar-item <?php loadMenuClassActive(["Usuarios", "Agregar Usuario", "Ver Usuario"],$title)?>">
-					<a href="<?php echo URL ?>/users" class='sidebar-link'>
-						<i class="bi bi-person-circle"></i>
-						<span>Usuarios</span>
-					</a>
-				</li>
+				<?php if($user->getRoleId()<=2):?>
+					<li class="sidebar-item <?php loadMenuClassActive(["Usuarios", "Agregar Usuario", "Ver Usuario"],$title)?>">
+						<a href="<?php echo URL ?>/users" class='sidebar-link'>
+							<i class="bi bi-person-circle"></i>
+							<span>Usuarios</span>
+						</a>
+					</li>
+					<li class="sidebar-item <?php loadMenuClassActive(["Grupos", "Agregar Grupo", "Ver Grupo"],$title)?>">
+						<a href="<?php echo URL ?>/groups" class='sidebar-link'>
+							<i class="bi bi-people-fill"></i>
+							<span>Grupos</span>
+						</a>
+					</li>
 				<?php endif;?>
 
 				<li class="sidebar-item <?php loadMenuClassActive(["Tickets", "Agregar Ticket", "Ver Ticket"],$title)?>">
@@ -50,22 +56,6 @@
 					<a href="<?php echo URL ?>/guides" class='sidebar-link'>
 						<i class="bi bi-file-code-fill"></i>
 						<span>Manuales</span>
-					</a>
-				</li>
-				
-				<?php if($user->getRoleId()==1):?>
-				<li class="sidebar-item <?php loadMenuClassActive(["Reportes"],$title)?>">
-					<a href="<?php echo URL ?>/reports" class='sidebar-link'>
-						<i class="bi bi-bar-chart-fill"></i>
-						<span>Reportes</span>
-					</a>
-				</li>
-				<?php endif?>
-				
-				<li class="sidebar-item <?php loadMenuClassActive(["Perfil"],$title)?>">
-					<a href="<?php echo URL ?>/profile" class='sidebar-link'>
-						<i class="bi bi-person-bounding-box"></i>
-						<span>Perfil</span>
 					</a>
 				</li>
 				

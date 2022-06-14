@@ -29,7 +29,7 @@
 								<li>
 									<h6 class="dropdown-header">Bienvenido!</h6>
 								</li>
-								<li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-person me-2"></i> Mi perfil</a></li>
+								<li><a class="dropdown-item" href="<?php echo URL?>/profile"><i class="icon-mid bi bi-person me-2"></i> Mi perfil</a></li>
 									<hr class="dropdown-divider">
 								</li>
 								<li><a class="dropdown-item" href="<?php echo URL?>/logout"><i class="icon-mid bi bi-box-arrow-left me-2"></i> Salir</a></li>

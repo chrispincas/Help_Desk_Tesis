@@ -54,6 +54,42 @@
       "site": "users",
       "access": "private",
       "role": "Administrador"
+    },
+    {
+      "site": "users",
+      "access": "private",
+      "role": "Soporte"
+    },
+    {
+      "site": "groups",
+      "access": "private",
+      "role": "Administrador"
+    },
+    {
+      "site": "groups",
+      "access": "private",
+      "role": "Soporte"
+    },
+    {
+      "site": "profile",
+      "access": "private",
+      "role": "Administrador"
+    },
+    
+    {
+      "site": "profile",
+      "access": "private",
+      "role": "Soporte"
+    },
+    {
+      "site": "profile",
+      "access": "private",
+      "role": "Usuario Interno"
+    },
+    {
+      "site": "profile",
+      "access": "private",
+      "role": "Usuario Externo"
     }
   ],
   "default-sites":{
