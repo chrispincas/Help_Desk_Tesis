@@ -3,6 +3,7 @@
 class UserModel extends Model implements IModel{
 
   private $id;
+  private $employeeId;
   private $name;
   private $email;
   private $password;
@@ -16,6 +17,7 @@ class UserModel extends Model implements IModel{
 
   public function __construct(){
     parent::__construct();
+    $this->employeeId=0;
     $this->name='';
     $this->email='';
     $this->password='';
@@ -28,15 +30,16 @@ class UserModel extends Model implements IModel{
   
   public function save(){
     try{
-      $query=$this->prepare('INSERT INTO user(name, email, password, status, group_id, role_id, created_at, modified_at) values(?,?,?,?,?,?,?,?)');
-      $query->bindParam(1, $this->name);
-      $query->bindParam(2, $this->email);
-      $query->bindParam(3, $this->password);
-      $query->bindParam(4, $this->status);
-      $query->bindParam(5, $this->groupId);
-      $query->bindParam(6, $this->roleId);
-      $query->bindParam(7, $this->createdAt);
-      $query->bindParam(8, $this->modifiedAt);
+      $query=$this->prepare('INSERT INTO user(employee_id, name, email, password, status, group_id, role_id, created_at, modified_at) values(?,?,?,?,?,?,?,?,?)');
+      $query->bindParam(1, $this->employeeId);
+      $query->bindParam(2, $this->name);
+      $query->bindParam(3, $this->email);
+      $query->bindParam(4, $this->password);
+      $query->bindParam(5, $this->status);
+      $query->bindParam(6, $this->groupId);
+      $query->bindParam(7, $this->roleId);
+      $query->bindParam(8, $this->createdAt);
+      $query->bindParam(9, $this->modifiedAt);
       $query->execute();
       return true;
     }catch(PDOException $e){
@@ -48,12 +51,14 @@ class UserModel extends Model implements IModel{
   public function getAll(){
     try{
       $items = [];
-      $query=$this->query('SELECT u.id, u.name, u.email, u.status, u.created_at, u.modified_at, gu.group_name, r.role FROM user u 
+      $query=$this->query('SELECT u.id, u.name, u.employee_id, u.email, u.status, u.created_at, u.modified_at, gu.group_name, r.role FROM user u 
       LEFT JOIN group_user gu ON(u.group_id = gu.id)
-      LEFT JOIN rol r ON(u.role_id = r.id)');
+      LEFT JOIN rol r ON(u.role_id = r.id)
+      ORDER BY u.id DESC');
       while($p=$query->fetch(PDO::FETCH_ASSOC)){
         $item = new userModel();
         $item->setId($p['id']);
+        $item->setEmployeeId($p['employee_id']);
         $item->setName($p['name']);
         $item->setEmail($p['email']);
         $item->setStatus($p['status']);
@@ -100,8 +105,13 @@ class UserModel extends Model implements IModel{
       ]);
       
       $user=$query->fetch(PDO::FETCH_ASSOC);
-      $this->from($user);
-      return $this;
+      if($user){
+				$this->from($user);
+				return $this;
+			}else{
+				error_log('userModel::get->Failed: '.$id.' no se encuentra en sistema');
+				return false;
+			}
 
     }catch(PDOException $e){
       error_log('userModel::getId->PDOException '.$e);
@@ -125,10 +135,10 @@ class UserModel extends Model implements IModel{
 
   public function update(){
     try{
-      $query=$this->prepare('UPDATE user SET name=?, email=?, password=?, status=?, group_id=?, role_id=?, modified_at=? WHERE id=:id');
-      $query->bindParam(1, $this->name);
-      $query->bindParam(2, $this->email);
-      $query->bindParam(3, $this->password);
+      $query=$this->prepare('UPDATE user SET employee_id=?, name=?, email=?, status=?, group_id=?, role_id=?, modified_at=? WHERE id=?');
+      $query->bindParam(1, $this->employeeId);
+      $query->bindParam(2, $this->name);
+      $query->bindParam(3, $this->email);
       $query->bindParam(4, $this->status);
       $query->bindParam(5, $this->groupId);
       $query->bindParam(6, $this->roleId);
@@ -143,13 +153,28 @@ class UserModel extends Model implements IModel{
     }
   }
 
+  public function updateProfile(){
+    try{
+      $query=$this->prepare('UPDATE user SET name=?, email=?, modified_at=? WHERE id=?');
+      $query->bindParam(1, $this->name);
+      $query->bindParam(2, $this->email);
+      $query->bindParam(3, $this->modifiedAt);
+      $query->bindParam(4, $this->id);
+      $query->execute();
+      return true;
+    }catch(PDOException $e){
+      error_log('userModel::udpateProfile->PDOException '.$e);
+      return false;
+    }
+  }
+
   public function updatePassword(){
     try{
-      $query=$this->prepare('UPDATE usuario SET password=:password WHERE id=:id');
-      $query->execute([
-        'id'=>$this->id,
-        'password'=>$this->password
-      ]);
+      $query=$this->prepare('UPDATE user SET password=?, modified_at=? WHERE id=?');
+      $query->bindParam(1, $this->password);
+      $query->bindParam(2, $this->modifiedAt);
+      $query->bindParam(3, $this->id);
+      $query->execute();
       return true;
     }catch(PDOException $e){
       error_log('userModel::udpatePassword->PDOException '.$e);
@@ -157,8 +182,23 @@ class UserModel extends Model implements IModel{
     }
   }
 
+  public function recoveryPassword(){
+    try{
+      $query=$this->prepare('UPDATE user SET password=?, modified_at=? WHERE email=?');
+      $query->bindParam(1, $this->password);
+      $query->bindParam(2, $this->modifiedAt);
+      $query->bindParam(3, $this->email);
+      $query->execute();
+      return true;
+    }catch(PDOException $e){
+      error_log('userModel::recoveryPassword->PDOException '.$e);
+      return false;
+    }
+  }
+
   public function from($array){
     $this->id = $array['id'];
+    $this->employeeId = $array['employee_id'];
     $this->name = $array['name'];
     $this->email = $array['email'];
     $this->password = $array['password'];
@@ -239,6 +279,14 @@ class UserModel extends Model implements IModel{
 
   public function setId($id){
     $this->id=$id;
+  }
+
+  public function getEmployeeId(){
+    return $this->employeeId;
+  }
+
+  public function setEmployeeId($employeeId){
+    $this->employeeId=$employeeId;
   }
 
   public function getEmail(){

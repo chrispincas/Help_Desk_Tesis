@@ -1,3 +1,5 @@
+console.log(json_tickets_category)
+
 let optionsProfileVisit = {
 	annotations: {
 		position: 'back'
@@ -14,33 +16,37 @@ let optionsProfileVisit = {
 	},
 	plotOptions: {
 	},
-	series: [
-		{
-			name: 'Total',
-			data: [10]
-		},
-		{
-			name: 'Abiertos',
-			data: [ 1]
-		},
-		{
-			name: 'Cerrados',
-			data: [ 9]
-		}
-	],
+	series: json_ticket_status,
 	colors: ['#435ebe','#f44336','#4caf50'],
 	xaxis: {
 		categories: ["Total"],
 	},
+	yaxis: [
+		{
+			labels: {
+				formatter: function(val) {
+					return val.toFixed(0);
+				}
+			}
+		}
+	]
 }
 
+let series = []
+let labels = []
+
+json_tickets_category.forEach(element => {
+	series.push(element.data[0])
+	labels.push(element.name)
+});
+console.log(series)
 let optionsTicketsGroup = {
-	series: [90, 55, 13, 43, 22,10],
+	series: series,
 	chart: {
-		width: 380,
+		width: 450,
 		type: 'pie',
 	},
-	labels: ['Soportes', 'Peticiones', 'Quejas', 'Reclamos', 'Solicitudes', 'Denuncias'],
+	labels: labels,
 	responsive: [{
 		breakpoint: 480,
 		options: {

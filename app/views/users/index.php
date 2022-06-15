@@ -46,12 +46,11 @@ require_once 'views/header.php';
 									<tr>
 										<th>#</th>
 										<th>Nombre</th>
+										<th>Código</th>
 										<th>Email</th>
 										<th>Grupo</th>
 										<th>Rol</th>
 										<th>Estado</th>
-										<th>Fecha Creación</th>
-										<th>Fecha Modificación</th>
 										<th>Acción</th>
 									</tr>
 								</thead>
@@ -60,6 +59,7 @@ require_once 'views/header.php';
 										<tr>
 											<td><?php echo $u->getId() ?></td>
 											<td><?php echo $u->getName() ?></td>
+											<td><?php echo $u->getEmployeeId() ?></td>
 											<td><?php echo $u->getEmail() ?></td>
 											<td><?php echo $u->getGroupName() ?></td>
 											<td><?php echo $u->getRoleName() ?></td>
@@ -70,8 +70,6 @@ require_once 'views/header.php';
 													<span class="badge bg-success">Activo</span>
 												<?php endif; ?>
 											</td>
-											<td><?php echo $u->getCreatedAt() ?></td>
-											<td><?php echo $u->getModifiedAt() ?></td>
 											<td>
 												<a href="<?php echo URL ?>/users/showUser?id=<?php echo $u->getId() ?>" class="btn btn-primary">
 													<i class="bi bi-eye"></i>

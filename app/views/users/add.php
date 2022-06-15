@@ -36,7 +36,17 @@
 						<form action="<?php echo URL?>/users/newUser" method="POST" class="form form-vertical needs-validation" novalidate>
 							<div class="form-body">
 								<div class="row">
-									
+									<div class="col-md-6">
+										<div class="form-group has-icon-left">
+											<label class="mb-2" for="employeeId">Código de empleado</label>
+											<div class="position-relative">
+												<input type="text" class="form-control" placeholder="Código de empleado" id="employeeId" name="employeeId" required>
+												<div class="form-control-icon pb-2">
+													<i class="bi bi-person-circle"></i>
+												</div>
+											</div>
+										</div>
+									</div>
 									<div class="col-md-6">
 										<div class="form-group has-icon-left">
 											<label class="mb-2" for="name">Nombre</label>

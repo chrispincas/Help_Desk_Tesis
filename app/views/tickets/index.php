@@ -41,31 +41,31 @@ function expiration($initialDate, $finalDate, $status, $priority){
 		}else{
 			$time = $hours." horas";
 		}
-	}
-	switch ($priority) {
-		case "Alto":
-			if ($hours <= 24) {
-				return "<span class='badge bg-warning text-dark'>".$time."</span>";
-			} else {
-				return "<span class='badge bg-danger'>Vencido".$time."</span>";
-			}
-			break;
-		case "Medio":
-			if ($hours <= 48) {
-				return "<span class='badge bg-warning text-dark'>".$time."</span>";
-			} else {
-				return "<span class='badge bg-danger'>Vencido ".$time."</span>";
-			}
-			break;
-		case "Bajo":
-			if ($hours <= 72) {
-				return "<span class='badge bg-warning text-dark'>".$time."</span>";
-			} else {
-				return "<span class='badge bg-danger'>Vencido ".$time."</span>";
-			}
-			break;
-		default;
-			break;
+		switch ($priority) {
+			case "Alto":
+				if ($hours <= 24) {
+					return "<span class='badge bg-warning text-dark'>".$time."</span>";
+				} else {
+					return "<span class='badge bg-danger'>Vencido".$time."</span>";
+				}
+				break;
+			case "Medio":
+				if ($hours <= 48) {
+					return "<span class='badge bg-warning text-dark'>".$time."</span>";
+				} else {
+					return "<span class='badge bg-danger'>Vencido ".$time."</span>";
+				}
+				break;
+			case "Bajo":
+				if ($hours <= 72) {
+					return "<span class='badge bg-warning text-dark'>".$time."</span>";
+				} else {
+					return "<span class='badge bg-danger'>Vencido ".$time."</span>";
+				}
+				break;
+			default;
+				break;
+		}
 	}
 }
 

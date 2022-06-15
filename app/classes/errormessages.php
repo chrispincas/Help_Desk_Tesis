@@ -27,6 +27,14 @@ class ErrorMessages{
   const ERROR_FILE_UPLOAD = "e_f_u_2021_400";
   const ERROR_TICKETS_NEWTICKET_SENDMAIL = "e_t_nt_sm_2021_400";
   const ERROR_TICKETS_GET = "e_t_g_2021_400";
+  const ERROR_USERS_GET = "e_u_g_2021_400";
+  //
+  CONST ERROR_GROUP_NEWGROUP = "e_g_ng_2021_400";
+  CONST ERROR_USERS_UPDATEPASSWORD_MATCH = "e_u_up_m_2021_400";
+  CONST ERROR_USERS_RECOVERYPASSWORD = "e_u_rp_2021_400";
+  CONST ERROR_USER_NOT_EXISTS = "e_u_ne_2021_400";
+  CONST ERROR_FILE_EMPTY = "e_f_e_2021_400";
+  CONST ERROR_HANDBOOK_CREATE = "e_h_c_2021_400";
   private $errorList = [];
 
   public function __construct(){
@@ -54,6 +62,13 @@ class ErrorMessages{
       ErrorMessages::ERROR_TICKETS_UPDATETICKET_UPDATE=>'Hubo un error al intentar procesar la solicitud',
       ErrorMessages::ERROR_TICKETS_NEWTICKET_SENDMAIL=>'Hubo un error al intentar enviar el correo',
       ErrorMessages::ERROR_TICKETS_GET=>'Ticket no encontrado',
+      ErrorMessages::ERROR_USERS_GET=>'Usuario no encontrado',
+      ErrorMessages::ERROR_GROUP_NEWGROUP=>'Hubo un error al intentar procesar la solicitud',
+      ErrorMessages::ERROR_USERS_UPDATEPASSWORD_MATCH=>'La contraseña no es igual',
+      ErrorMessages::ERROR_USERS_RECOVERYPASSWORD=>'Hubo un error al intentar procesar la solicitud',
+      ErrorMessages::ERROR_USER_NOT_EXISTS=>'Usuario no encontrado',
+      ErrorMessages::ERROR_FILE_EMPTY=>'No hay archivo asociado',
+      ErrorMessages::ERROR_HANDBOOK_CREATE=>'Hubo un error al intentar procesar la solicitud',
     ];
   }
 

@@ -155,7 +155,11 @@ class Tickets extends SessionController{
         $ticket->setPhone($phone);
         $ticket->setEmail($email);
         $ticket->setDescription($description);
-        $ticket->setUserId($userId);
+        if($category == 2){
+          $ticket->setUserId(1);
+        }else{
+          $ticket->setUserId($userId);
+        }
         $ticket->setTicketStatusId(1);
         $ticket->setCreatedAt($createdAt);
         $ticket->setModifiedAt($modifiedAt);
