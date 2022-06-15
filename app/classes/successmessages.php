@@ -16,6 +16,7 @@ class SuccessMessages{
   const SUCCESS_TICKETS_UPDATETICKET = 's_t_ut_2021_200';
   const SUCCESS_GROUP_NEWGROUP = 's_g_ng_2021_200';
   const SUCCESS_USERS_RECOVERYPASSWORD = 's_u_rp_2021_200';
+  CONST SUCCESS_HANDBOOK_CREATE = 's_h_c_2021_200';
 
   private $successList = [];
   public function __construct(){
@@ -33,7 +34,8 @@ class SuccessMessages{
       SuccessMessages::SUCCESS_TICKETS_REMOVE=>'Ticket eliminado',
       SuccessMessages::SUCCESS_TICKETS_UPDATETICKET=>'Ticket actualizado',
       SuccessMessages::SUCCESS_GROUP_NEWGROUP=>'Grupo creado',
-      SuccessMessages::SUCCESS_USERS_RECOVERYPASSWORD=>'Se ha enviado un correo con la contraseña'
+      SuccessMessages::SUCCESS_USERS_RECOVERYPASSWORD=>'Se ha enviado un correo con la contraseña',
+      SuccessMessages::SUCCESS_HANDBOOK_CREATE=>'Se ha creado el manual'
     ];
   }
 

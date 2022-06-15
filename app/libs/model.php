@@ -1,6 +1,6 @@
 <?php
 
-require_once 'libs/imodel.php';
+require_once 'imodel.php';
 
 class Model{
 

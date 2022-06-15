@@ -90,6 +90,26 @@
       "site": "profile",
       "access": "private",
       "role": "Usuario Externo"
+    },
+    {
+      "site": "handbooks",
+      "access": "private",
+      "role": "Administrador"
+    },
+    {
+      "site": "handbooks",
+      "access": "private",
+      "role": "Soporte"
+    },
+    {
+      "site": "handbooks",
+      "access": "private",
+      "role": "Usuario Interno"
+    },
+    {
+      "site": "handbooks",
+      "access": "private",
+      "role": "Usuario Externo"
     }
   ],
   "default-sites":{

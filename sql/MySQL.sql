@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: db
--- Tiempo de generación: 14-06-2022 a las 02:18:51
+-- Tiempo de generación: 15-06-2022 a las 04:27:42
 -- Versión del servidor: 5.6.51
 -- Versión de PHP: 8.0.19
 
@@ -88,6 +88,20 @@ CREATE TABLE `group_user` (
 
 INSERT INTO `group_user` (`id`, `group_name`) VALUES
 (1, 'Sin asignar');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `handbook`
+--
+
+CREATE TABLE `handbook` (
+  `id` int(11) NOT NULL,
+  `title` char(255) NOT NULL,
+  `url` char(255) NOT NULL,
+  `subcategory_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -276,7 +290,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `employee_id`, `name`, `email`, `password`, `status`, `group_id`, `role_id`, `created_at`, `modified_at`) VALUES
-(1, '1012', 'JOAN NIETO', 'administrador@totalsolution.com', '$2y$10$5hnbGHmBQj9e0wDAN5Y7Xe98kuTGtQi7eTr0B18jEPEB81lVwehM6', 1, 2, 1, '2022-04-13 16:03:13', '2022-04-13 16:03:13');
+(1, '1012', 'JOAN NIETO', 'administrador@totalsolution.com', '$2y$10$5hnbGHmBQj9e0wDAN5Y7Xe98kuTGtQi7eTr0B18jEPEB81lVwehM6', 1, 1, 1, '2022-04-13 16:03:13', '2022-04-13 16:03:13');
 
 --
 -- Índices para tablas volcadas
@@ -300,6 +314,12 @@ ALTER TABLE `comment`
 -- Indices de la tabla `group_user`
 --
 ALTER TABLE `group_user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `handbook`
+--
+ALTER TABLE `handbook`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -336,7 +356,8 @@ ALTER TABLE `ticket_status`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `role_id` (`role_id`);
+  ADD KEY `role_id` (`role_id`),
+  ADD KEY `group_id` (`group_id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -359,6 +380,12 @@ ALTER TABLE `comment`
 --
 ALTER TABLE `group_user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `handbook`
+--
+ALTER TABLE `handbook`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -420,7 +447,8 @@ ALTER TABLE `ticket`
 -- Filtros para la tabla `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `rol` (`id`);
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `rol` (`id`),
+  ADD CONSTRAINT `user_ibfk_2` FOREIGN KEY (`group_id`) REFERENCES `group_user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

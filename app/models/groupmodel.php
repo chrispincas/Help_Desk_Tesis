@@ -5,9 +5,9 @@ class GroupModel extends Model implements IModel{
 	private $id;
 	private $group;
 
-	public function __construct(){
+  public function __construct(){
 		parent::__construct();
-		$group = "";
+		$this->group = "";
 	}
 
 	public function save(){

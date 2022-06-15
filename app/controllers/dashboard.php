@@ -6,8 +6,9 @@ require_once 'models/reportmodel.php';
 class Dashboard extends SessionController{
 
   private $user; 
-  private $role; 
-  
+  private $role;
+  private $report;
+
   function __construct(){
     parent::__construct();
     $this->user = $this->getUserSessionData();
@@ -26,20 +27,5 @@ class Dashboard extends SessionController{
     ]);
   }
 
-  function search(){
-    if($this->existGet(['term'])){
-      $term = $this->getGet('term');
-      if($term=='' || empty($term)){
-        $this->view->render('dashboard/index',[
-          'user'=>$this->user
-        ]);
-      }else{
-        $this->view->render('dashboard/index',[
-          'user'=>$this->user,
-          'client'=>$this->client->search($term)
-        ]);
-      }
-    }
-  }
 }
 ?>

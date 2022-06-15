@@ -52,8 +52,8 @@
 					</a>
 				</li>
 
-				<li class="sidebar-item <?php loadMenuClassActive(["Manuales"],$title)?>">
-					<a href="<?php echo URL ?>/guides" class='sidebar-link'>
+				<li class="sidebar-item <?php loadMenuClassActive(["Manuales", "Agregar Manual", "Ver Manual"],$title)?>">
+					<a href="<?php echo URL ?>/handbooks" class='sidebar-link'>
 						<i class="bi bi-file-code-fill"></i>
 						<span>Manuales</span>
 					</a>
