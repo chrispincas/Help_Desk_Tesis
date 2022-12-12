@@ -36,7 +36,9 @@ require_once 'views/header.php';
 					<?php $this->showMessages(); ?>
 					<div class="card">
 						<div class="header-card pt-4 px-3">
+							<?php if($user->getRoleId()==1):?>
 							<a href="<?php echo URL ?>/handbooks/add" class="btn btn-success">Agregar Manual</a>
+							<?php endif?>
 						</div>
 						<div class="body-card px-3 py-3">
 							<table class="table table-striped mt-3" id="table">

@@ -3,6 +3,7 @@
 	$role = $this->d['role'];
 	$categories = $this->d['categories'];
 	$users = $this->d['users'];
+	$groups = $this->d['groups'];
 
 	$title = "Agregar Ticket";
 	$bodyType = "";
@@ -126,7 +127,11 @@
 										<div class="form-group has-icon-left">
 											<label class="mb-2" for="email">Correo</label>
 											<div class="position-relative">
-												<input type="email" class="form-control" placeholder="Email" id="email" name="email" required>
+												<?php if($user->getRoleId()>2):?>
+													<input type="email" class="form-control" placeholder="Email" id="email" name="email" value="<?php echo $user->getEmail()?>" readonly="true" required >
+												<?php else:?>
+													<input type="email" class="form-control" placeholder="Email" id="email" name="email" value="<?php echo $user->getEmail()?>" required >
+												<?php endif?>
 												<div class="form-control-icon pb-2">
 													<i class="bi bi-envelope"></i>
 												</div>
@@ -134,6 +139,21 @@
 										</div>
 									</div>
 									<div class="col-md-4">
+										<div class="form-group has-icon-left">
+											<label class="mb-2" for="subcategory">Asignación</label>
+											<div class="position-relative">
+												<select name="group" id="group" class="form-control form-select" required>
+													<?php foreach($groups as $g):?>
+														<option value="<?php echo $g->getId() ?>"><?php echo $g->getGroup() ?></option>
+													<?php endforeach?>
+												</select>
+												<div class="form-control-icon pb-2">
+													<i class="bi bi-card-list"></i>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-12">
 										<div class="form-group">
 											<label class="mb-2" for="attachments">Evidencias (Opcional)</label>
 											<input class="form-control" type="file" name="attachments" id="attachments">

@@ -8,9 +8,9 @@ class TicketModel extends Model implements IModel{
 	private $email;
 	private $phone;
 	private $description;
-	private $categoryId;
 	private $subcategoryId;
 	private $files;
+	private $groupId;
 	private $userId;
 	private $ticketStatusId;
 	private $createdAt;
@@ -23,9 +23,9 @@ class TicketModel extends Model implements IModel{
 		$this->email='';
 		$this->phone=0;
 		$this->description='';
-		$this->categoryId=0;
 		$this->subcategoryId=0;
 		$this->files='';
+		$this->groupId=0;
 		$this->userId=0;
 		$this->ticketStatusId=0;
 		$this->createdAt='';
@@ -35,15 +35,15 @@ class TicketModel extends Model implements IModel{
 	public function save(){
 		try{
 			$db = $this->db->connect();
-			$query=$db->prepare('INSERT INTO ticket(priority, subject, email,phone,description,category_id,subcategory_id,files,user_id,ticket_status_id,created_at,modified_at) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+			$query=$db->prepare('INSERT INTO ticket(priority, subject, email,phone,description,subcategory_id,files, group_id,user_id,ticket_status_id,created_at,modified_at) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
 			$query->bindParam(1, $this->priority);
 			$query->bindParam(2, $this->subject);
 			$query->bindParam(3, $this->email);
 			$query->bindParam(4, $this->phone);
 			$query->bindParam(5, $this->description);
-			$query->bindParam(6, $this->categoryId);
-			$query->bindParam(7, $this->subcategoryId);
-			$query->bindParam(8, $this->files);
+			$query->bindParam(6, $this->subcategoryId);
+			$query->bindParam(7, $this->files);
+			$query->bindParam(8, $this->groupId);
 			$query->bindParam(9, $this->userId);
 			$query->bindParam(10, $this->ticketStatusId);
 			$query->bindParam(11, $this->createdAt);
@@ -83,9 +83,9 @@ class TicketModel extends Model implements IModel{
 		$this->email = $array['email'];
 		$this->phone = $array['phone'];
 		$this->description = $array['description'];
-		$this->categoryId = $array['category_id'];
 		$this->subcategoryId = $array['subcategory_id'];
 		$this->files = $array['files'];
+		$this->groupId = $array['group_id'];
 		$this->userId = $array['user_id'];
 		$this->ticketStatusId = $array['ticket_status_id'];
 		$this->createdAt = $array['created_at'];
@@ -112,10 +112,10 @@ class TicketModel extends Model implements IModel{
 
 	public function update(){
 		try{
-			$query=$this->prepare('UPDATE ticket SET priority=?, category_id=?,subcategory_id=?,ticket_status_id=?, modified_at=? WHERE id=?');
+			$query=$this->prepare('UPDATE ticket SET priority=?, subcategory_id=?, group_id=?, ticket_status_id=?, modified_at=? WHERE id=?');
 			$query->bindParam(1, $this->priority);
-			$query->bindParam(2, $this->categoryId);
-			$query->bindParam(3, $this->subcategoryId);
+			$query->bindParam(2, $this->subcategoryId);
+			$query->bindParam(3, $this->groupId);
 			$query->bindParam(4, $this->ticketStatusId);
 			$query->bindParam(5, $this->modifiedAt);
 			$query->bindParam(6, $this->id);
@@ -228,20 +228,20 @@ class TicketModel extends Model implements IModel{
 		return $this->description;
 	}
 
-	public function setCategoryId($categoryId){
-		$this->categoryId=$categoryId;
-	}
-
-	public function getCategoryId(){
-		return $this->categoryId;
-	}
-
 	public function setSubcategoryId($subcategoryId){
 		$this->subcategoryId=$subcategoryId;
 	}
 
 	public function getSubcategoryId(){
 		return $this->subcategoryId;
+	}
+
+	public function setGroupId($groupId){
+		$this->groupId=$groupId;
+	}
+
+	public function getGroupId(){
+		return $this->groupId;
 	}
 
 	public function setFiles($files){

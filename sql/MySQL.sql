@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
--- Servidor: db
--- Tiempo de generación: 15-06-2022 a las 04:27:42
--- Versión del servidor: 5.6.51
--- Versión de PHP: 8.0.19
+-- Host: localhost:3306
+-- Generation Time: May 14, 2022 at 09:49 PM
+-- Server version: 5.7.33
+-- PHP Version: 7.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `total_solution`
+-- Database: `total_solution`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `category`
+-- Table structure for table `category`
 --
 
 CREATE TABLE `category` (
@@ -33,7 +33,7 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `category`
+-- Dumping data for table `category`
 --
 
 INSERT INTO `category` (`id`, `category`) VALUES
@@ -60,7 +60,7 @@ INSERT INTO `category` (`id`, `category`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `comment`
+-- Table structure for table `comment`
 --
 
 CREATE TABLE `comment` (
@@ -74,39 +74,18 @@ CREATE TABLE `comment` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `group_user`
+-- Table structure for table `group`
 --
 
-CREATE TABLE `group_user` (
+CREATE TABLE `group` (
   `id` int(11) NOT NULL,
   `group_name` char(100) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `group_user`
---
-
-INSERT INTO `group_user` (`id`, `group_name`) VALUES
-(1, 'Sin asignar');
-
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `handbook`
---
-
-CREATE TABLE `handbook` (
-  `id` int(11) NOT NULL,
-  `title` char(255) NOT NULL,
-  `url` char(255) NOT NULL,
-  `subcategory_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `rol`
+-- Table structure for table `rol`
 --
 
 CREATE TABLE `rol` (
@@ -115,7 +94,7 @@ CREATE TABLE `rol` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `rol`
+-- Dumping data for table `rol`
 --
 
 INSERT INTO `rol` (`id`, `role`) VALUES
@@ -127,7 +106,7 @@ INSERT INTO `rol` (`id`, `role`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `subcategory`
+-- Table structure for table `subcategory`
 --
 
 CREATE TABLE `subcategory` (
@@ -137,7 +116,7 @@ CREATE TABLE `subcategory` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `subcategory`
+-- Dumping data for table `subcategory`
 --
 
 INSERT INTO `subcategory` (`id`, `subcategory`, `category_id`) VALUES
@@ -226,7 +205,7 @@ INSERT INTO `subcategory` (`id`, `subcategory`, `category_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `ticket`
+-- Table structure for table `ticket`
 --
 
 CREATE TABLE `ticket` (
@@ -248,7 +227,7 @@ CREATE TABLE `ticket` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `ticket_status`
+-- Table structure for table `ticket_status`
 --
 
 CREATE TABLE `ticket_status` (
@@ -257,7 +236,7 @@ CREATE TABLE `ticket_status` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `ticket_status`
+-- Dumping data for table `ticket_status`
 --
 
 INSERT INTO `ticket_status` (`id`, `ticket_status`) VALUES
@@ -269,12 +248,11 @@ INSERT INTO `ticket_status` (`id`, `ticket_status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `employee_id` char(50) COLLATE utf8_spanish_ci NOT NULL,
   `name` char(150) COLLATE utf8_spanish_ci NOT NULL,
   `email` char(150) COLLATE utf8_spanish_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
@@ -286,24 +264,24 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Users Table';
 
 --
--- Volcado de datos para la tabla `user`
+-- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `employee_id`, `name`, `email`, `password`, `status`, `group_id`, `role_id`, `created_at`, `modified_at`) VALUES
-(1, '1012', 'JOAN NIETO', 'administrador@totalsolution.com', '$2y$10$5hnbGHmBQj9e0wDAN5Y7Xe98kuTGtQi7eTr0B18jEPEB81lVwehM6', 1, 1, 1, '2022-04-13 16:03:13', '2022-04-13 16:03:13');
+INSERT INTO `user` (`id`, `name`, `email`, `password`, `status`, `group_id`, `role_id`, `created_at`, `modified_at`) VALUES
+(1, 'JOAN NIETO', 'administrador@totalsolution.com', '$2y$10$5hnbGHmBQj9e0wDAN5Y7Xe98kuTGtQi7eTr0B18jEPEB81lVwehM6', 1, 2, 1, '2022-04-13 16:03:13', '2022-04-13 16:03:13');
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `category`
+-- Indexes for table `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `comment`
+-- Indexes for table `comment`
 --
 ALTER TABLE `comment`
   ADD PRIMARY KEY (`id`),
@@ -311,32 +289,20 @@ ALTER TABLE `comment`
   ADD KEY `comments_ibfk_1` (`ticket_id`);
 
 --
--- Indices de la tabla `group_user`
---
-ALTER TABLE `group_user`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `handbook`
---
-ALTER TABLE `handbook`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `rol`
+-- Indexes for table `rol`
 --
 ALTER TABLE `rol`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `subcategory`
+-- Indexes for table `subcategory`
 --
 ALTER TABLE `subcategory`
   ADD PRIMARY KEY (`id`),
   ADD KEY `category_id` (`category_id`);
 
 --
--- Indices de la tabla `ticket`
+-- Indexes for table `ticket`
 --
 ALTER TABLE `ticket`
   ADD PRIMARY KEY (`id`),
@@ -346,96 +312,83 @@ ALTER TABLE `ticket`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indices de la tabla `ticket_status`
+-- Indexes for table `ticket_status`
 --
 ALTER TABLE `ticket_status`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `role_id` (`role_id`),
-  ADD KEY `group_id` (`group_id`);
+  ADD KEY `role_id` (`role_id`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `category`
+-- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
--- AUTO_INCREMENT de la tabla `comment`
+-- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
--- AUTO_INCREMENT de la tabla `group_user`
---
-ALTER TABLE `group_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `handbook`
---
-ALTER TABLE `handbook`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `rol`
+-- AUTO_INCREMENT for table `rol`
 --
 ALTER TABLE `rol`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `subcategory`
+-- AUTO_INCREMENT for table `subcategory`
 --
 ALTER TABLE `subcategory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
--- AUTO_INCREMENT de la tabla `ticket`
+-- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
--- AUTO_INCREMENT de la tabla `ticket_status`
+-- AUTO_INCREMENT for table `ticket_status`
 --
 ALTER TABLE `ticket_status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
--- AUTO_INCREMENT de la tabla `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `comment`
+-- Constraints for table `comment`
 --
 ALTER TABLE `comment`
   ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
--- Filtros para la tabla `subcategory`
+-- Constraints for table `subcategory`
 --
 ALTER TABLE `subcategory`
   ADD CONSTRAINT `subcategory_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
 
 --
--- Filtros para la tabla `ticket`
+-- Constraints for table `ticket`
 --
 ALTER TABLE `ticket`
   ADD CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
@@ -444,11 +397,10 @@ ALTER TABLE `ticket`
   ADD CONSTRAINT `ticket_ibfk_4` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
--- Filtros para la tabla `user`
+-- Constraints for table `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `rol` (`id`),
-  ADD CONSTRAINT `user_ibfk_2` FOREIGN KEY (`group_id`) REFERENCES `group_user` (`id`);
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `rol` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

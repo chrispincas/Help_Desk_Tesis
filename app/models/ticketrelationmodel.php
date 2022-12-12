@@ -11,6 +11,7 @@ class TicketRelationModel extends Model{
 	private $category;
 	private $subcategory;
 	private $files;
+	private $grupo;
 	private $userId;
 	private $name;
 	private $status;
@@ -28,6 +29,7 @@ class TicketRelationModel extends Model{
 		$this->category='';
 		$this->subcategory='';
 		$this->files='';
+		$this->grupo='';
 		$this->userId=0;
 		$this->name='';
 		$this->status='';
@@ -38,13 +40,13 @@ class TicketRelationModel extends Model{
 	public function getAllRelation(){
 		try{
 			$items = [];
-			$query=$this->prepare('SELECT t.id, t.subject, priority, t.email, phone, description, c.category, s.subcategory, files, t.user_id, u.name, ts.ticket_status, t.created_at, t.modified_at
+			$query=$this->prepare('SELECT t.id, t.subject, priority, t.email, phone, description, c.category, s.subcategory, (SELECT group_name FROM group_user WHERE id=t.group_id) grupo, files, t.user_id, u.name, ts.ticket_status, t.created_at, t.modified_at
 			FROM ticket t 
 			LEFT JOIN user u ON(t.user_id=u.id)
-			LEFT JOIN category c ON(t.category_id=c.id)
 			LEFT JOIN subcategory s ON(t.subcategory_id=s.id)
+			LEFT JOIN category c ON(s.category_id=c.id)
 			LEFT JOIN ticket_status ts ON(t.ticket_status_id=ts.id)
-			ORDER BY t.id DESC');
+			ORDER BY t.id DESC;');
 			$query->execute();
 			while($p=$query->fetch(PDO::FETCH_ASSOC)){
         $item = new TicketRelationModel();
@@ -57,6 +59,7 @@ class TicketRelationModel extends Model{
 				$item->setCategory($p['category']);
 				$item->setSubcategory($p['subcategory']);
 				$item->setFiles($p['files']);
+				$item->setGrupo($p['grupo']);
 				$item->setUserId($p['user_id']);
 				$item->setName($p['name']);
 				$item->setStatus($p['ticket_status']);
@@ -75,11 +78,11 @@ class TicketRelationModel extends Model{
 	public function getAllRelationByUserId($id){
 		try{
 			$items = [];
-			$query=$this->prepare('SELECT t.id, t.subject, priority, t.email, phone, description, c.category, s.subcategory, files, t.user_id, u.name, ts.ticket_status, t.created_at, t.modified_at
+			$query=$this->prepare('SELECT t.id, t.subject, priority, t.email, phone, description, c.category, s.subcategory, (SELECT group_name FROM group_user WHERE id=t.group_id) grupo, files, t.user_id, u.name, ts.ticket_status, t.created_at, t.modified_at
 			FROM ticket t 
 			LEFT JOIN user u ON(t.user_id=u.id)
-			LEFT JOIN category c ON(t.category_id=c.id)
 			LEFT JOIN subcategory s ON(t.subcategory_id=s.id)
+			LEFT JOIN category c ON(s.category_id=c.id)
 			LEFT JOIN ticket_status ts ON(t.ticket_status_id=ts.id)
 			WHERE t.user_id= ?');
 			$query->bindParam(1,$id);
@@ -95,6 +98,47 @@ class TicketRelationModel extends Model{
 				$item->setCategory($p['category']);
 				$item->setSubcategory($p['subcategory']);
 				$item->setFiles($p['files']);
+				$item->setGrupo($p['grupo']);
+				$item->setUserId($p['user_id']);
+				$item->setName($p['name']);
+				$item->setStatus($p['ticket_status']);
+				$item->setCreatedAt($p['created_at']);
+				$item->setModifiedAt($p['modified_at']);
+        array_push($items,$item);
+      }
+      return $items;
+		}catch(PDOException $e){
+			error_log('ticketModel::getAll->PDOException '.$e);
+			return false;
+		}
+	}
+
+	public function getAllRelationByGroupId($groupId, $userId){
+		try{
+			$items = [];
+			$query=$this->prepare('SELECT t.id, t.subject, priority, t.email, phone, description, c.category, s.subcategory, (SELECT group_name FROM group_user WHERE id=t.group_id) grupo, files, t.user_id, u.name, ts.ticket_status, t.created_at, t.modified_at
+			FROM ticket t 
+			LEFT JOIN user u ON(t.user_id=u.id)
+			LEFT JOIN subcategory s ON(t.subcategory_id=s.id)
+			LEFT JOIN category c ON(s.category_id=c.id)
+			LEFT JOIN ticket_status ts ON(t.ticket_status_id=ts.id)
+			WHERE t.group_id= ? OR t.user_id = ?');
+			// error_log($groupId. " " .$userId);
+			$query->bindParam(1,$groupId);
+			$query->bindParam(2,$userId);
+			$query->execute();
+			while($p=$query->fetch(PDO::FETCH_ASSOC)){
+        $item = new TicketRelationModel();
+				$item->setId($p['id']);
+				$item->setSubject($p['subject']);
+				$item->setPriority($p['priority']);
+				$item->setEmail($p['email']);
+				$item->setPhone($p['phone']);
+				$item->setDescription($p['description']);
+				$item->setCategory($p['category']);
+				$item->setSubcategory($p['subcategory']);
+				$item->setFiles($p['files']);
+				$item->setGrupo($p['grupo']);
 				$item->setUserId($p['user_id']);
 				$item->setName($p['name']);
 				$item->setStatus($p['ticket_status']);
@@ -111,11 +155,11 @@ class TicketRelationModel extends Model{
 
 	public function get($id){
 		try{
-			$query=$this->prepare('SELECT t.id, t.subject, priority, t.email, phone, description, c.category, s.subcategory, files, t.user_id, u.name, ts.ticket_status, t.created_at, t.modified_at
+			$query=$this->prepare('SELECT t.id, t.subject, priority, t.email, phone, description, c.category, s.subcategory, (SELECT group_name FROM group_user WHERE id=t.group_id) grupo, files, t.user_id, u.name, ts.ticket_status, t.created_at, t.modified_at
 			FROM ticket t 
 			LEFT JOIN user u ON(t.user_id=u.id)
-			LEFT JOIN category c ON(t.category_id=c.id)
 			LEFT JOIN subcategory s ON(t.subcategory_id=s.id)
+			LEFT JOIN category c ON(s.category_id=c.id)
 			LEFT JOIN ticket_status ts ON(t.ticket_status_id=ts.id)
 			WHERE t.id = ?');
 			$query->bindParam(1, $id);
@@ -158,6 +202,7 @@ class TicketRelationModel extends Model{
 		$this->category = $array['category'];
 		$this->subcategory = $array['subcategory'];
 		$this->files = $array['files'];
+		$this->grupo = $array['grupo'];
 		$this->userId = $array['user_id'];
 		$this->name = $array['name'];
 		$this->status = $array['ticket_status'];
@@ -229,6 +274,13 @@ class TicketRelationModel extends Model{
 		return $this->subcategory;
 	}
 
+	public function setGrupo($grupo){
+		$this->grupo=$grupo;
+	}
+	
+	public function getGrupo(){
+		return $this->grupo;
+	}
 
 	public function setFiles($files){
 		$this->files=$files;

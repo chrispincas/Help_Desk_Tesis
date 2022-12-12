@@ -79,7 +79,7 @@ class Handbooks extends SessionController{
           if(!file_exists('guides/'.$folder)) {
             mkdir('guides/'.$folder, 0777, true);
           }
-          $fileNameNew =  date('Ymdhis')."." . $fileActualExt;
+          $fileNameNew =  $fileName;
           $fileDestination = 'guides/'.$folder."/".$fileNameNew;
           $fileUrl = URL.'/guides/'.$folder."/".$fileNameNew;
           move_uploaded_file($fileTmpName, $fileDestination);

@@ -63,10 +63,11 @@ class ReportModel extends Model{
 	public function countTicketsGroupByCategory(){
 		try{
 			$items = [];
-			$query=$this->query('SELECT count(t.id) total, category 
+			$query=$this->query('SELECT COUNT(c.id) total, c.category category
 			FROM ticket t
-			LEFT JOIN category c ON (c.id=t.category_id)
-			GROUP BY t.category_id');
+			LEFT JOIN subcategory s ON (s.id=t.subcategory_id)
+			LEFT JOIN category c ON (c.id=s.category_id)
+			GROUP BY c.id');
 			$query->execute();
 			while($p=$query->fetch(PDO::FETCH_ASSOC)){
 				$item = new ReportModel();

@@ -8,6 +8,7 @@ require_once 'models/ticketstatusmodel.php';
 require_once 'models/ticketrelationmodel.php';
 require_once 'models/commentrelationmodel.php';
 require_once 'models/commentmodel.php';
+require_once 'models/groupmodel.php';
 require_once 'controllers/MailController.php';
 
 class Tickets extends SessionController{
@@ -28,6 +29,7 @@ class Tickets extends SessionController{
     $this->comment = new CommentModel();
     $this->mail = new MailController();
     $this->users = new UserModel();
+    $this->groups = new GroupModel();
   }
 
   function render(){
@@ -41,7 +43,7 @@ class Tickets extends SessionController{
       $this->view->render('tickets/index',[
         'user'=>$this->user,
         'role'=>$this->role->get($this->user->getRoleId()),
-        'tickets'=>$this->ticketRelation->getAllRelationByUserId($this->user->getId())
+        'tickets'=>$this->ticketRelation->getAllRelationByGroupId($this->user->getGroupId(), $this->user->getId())
       ]);
     }
   }
@@ -52,21 +54,24 @@ class Tickets extends SessionController{
         'user'=>$this->user,
         'role'=>$this->role->get($this->user->getRoleId()),
         'categories'=>$this->category->getAll(),
-        'users'=>$this->users->getAll()
+        'users'=>$this->users->getAll(),
+        'groups'=>$this->groups->getAll()
       ]);
     }else if($this->user->getRoleId() == 2){
       $this->view->render('tickets/add',[
         'user'=>$this->user,
         'role'=>$this->role->get($this->user->getRoleId()),
         'categories'=>$this->category->getAll(),
-        'users'=>$this->users->getAllByGroupId($this->user->getGroupId())
+        'users'=>$this->users->getAllByGroupId($this->user->getGroupId()),
+        'groups'=>$this->groups->getAll()
       ]);
     }else{
       $this->view->render('tickets/add',[
         'user'=>$this->user,
         'role'=>$this->role->get($this->user->getRoleId()),
         'categories'=>$this->category->getAll(),
-        'users'=>$this->users->getAllByGroupId($this->user->getGroupId())
+        'users'=>$this->users->getAllByGroupId($this->user->getGroupId()),
+        'groups'=>$this->groups->getAll()
       ]);
     }
     
@@ -78,31 +83,35 @@ class Tickets extends SessionController{
       if(!$this->ticket->get($id)){
         $this->redirect('tickets', ['error' => ErrorMessages::ERROR_TICKETS_GET]);
       }else{
-        if($this->user->getRoleId() == 1){
-          $this->view->render('tickets/show',[
-            'user'=>$this->user,
-            'role'=>$this->role->get($this->user->getRoleId()),
-            'categories'=>$this->category->getAll(),
-            'subcategories'=>$this->subcategory->getAll(),
-            'ticketStatus'=>$this->ticketStatus->getAll(),
-            'tickets'=>$this->ticketRelation->get($id),
-            'comments'=>$this->commentRelation->getCommentsByTicketId($id)
-          ]);
-        }else{
-          if($this->ticketRelation->compareUserTicketPermission($id, $this->user->getId())){
-            $this->view->render('tickets/show',[
-              'user'=>$this->user,
-              'role'=>$this->role->get($this->user->getRoleId()),
-              'categories'=>$this->category->getAll(),
-              'subcategories'=>$this->subcategory->getAll(),
-              'ticketStatus'=>$this->ticketStatus->getAll(),
-              'tickets'=>$this->ticketRelation->get($id),
-              'comments'=>$this->commentRelation->getCommentsByTicketId($id)
-            ]);
-          }else{
-            $this->redirect('tickets', ['error' => ErrorMessages::ERROR_TICKETS_SHOWTICKET_PERMISSION]);
-          }
-        }
+        $this->view->render('tickets/show',[
+          'user'=>$this->user,
+          'role'=>$this->role->get($this->user->getRoleId()),
+          'categories'=>$this->category->getAll(),
+          'subcategories'=>$this->subcategory->getAll(),
+          'ticketStatus'=>$this->ticketStatus->getAll(),
+          'tickets'=>$this->ticketRelation->get($id),
+          'comments'=>$this->commentRelation->getCommentsByTicketId($id),
+          'groups'=>$this->groups->getAll()
+        ]);
+        // if($this->user->getRoleId() == 1){
+          
+        // }else{
+        //   // if($this->ticketRelation->compareUserTicketPermission($id, $this->user->getId())){
+            
+        //   // }else{
+        //   //   $this->redirect('tickets', ['error' => ErrorMessages::ERROR_TICKETS_SHOWTICKET_PERMISSION]);
+        //   // }
+        //   $this->view->render('tickets/show',[
+        //     'user'=>$this->user,
+        //     'role'=>$this->role->get($this->user->getRoleId()),
+        //     'categories'=>$this->category->getAll(),
+        //     'subcategories'=>$this->subcategory->getAll(),
+        //     'ticketStatus'=>$this->ticketStatus->getAll(),
+        //     'tickets'=>$this->ticketRelation->get($id),
+        //     'comments'=>$this->commentRelation->getCommentsByTicketId($id),
+        //     'groups'=>$this->groups->getAll()
+        //   ]);
+        // }
       } 
     }
     
@@ -126,7 +135,7 @@ class Tickets extends SessionController{
   }
 
   function newTicket(){
-    if($this->existPOST(["userId","subject", "priority", "category", "subcategory", "phone", "email","description"])){
+    if($this->existPOST(["userId","subject", "priority", "group", "category", "subcategory", "phone", "email","description"])){
       
       $isFile = false;
       if($this->existFile(['attachments'])){
@@ -137,6 +146,7 @@ class Tickets extends SessionController{
       $priority = $this->getPost('priority');
       $category = $this->getPost('category');
       $subcategory = $this->getPost('subcategory');
+      $group = $this->getPost('group');
       $phone = $this->getPost('phone');
       $email = $this->getPost('email');
       $description = $this->getPost('description');
@@ -150,16 +160,16 @@ class Tickets extends SessionController{
         $ticket = new TicketModel();
         $ticket->setSubject($subject);
         $ticket->setPriority($priority);
-        $ticket->setCategoryId($category);
         $ticket->setSubcategoryId($subcategory);
         $ticket->setPhone($phone);
         $ticket->setEmail($email);
         $ticket->setDescription($description);
         if($category == 2){
-          $ticket->setUserId(1);
+          $ticket->setUserId(220001);
         }else{
           $ticket->setUserId($userId);
         }
+        $ticket->setGroupId($group);
         $ticket->setTicketStatusId(1);
         $ticket->setCreatedAt($createdAt);
         $ticket->setModifiedAt($modifiedAt);
@@ -221,12 +231,13 @@ class Tickets extends SessionController{
   }
 
   function updateTicket(){
-    if($this->existPOST(['id', 'ticketStatus', 'priority', 'category', 'subcategory', 'description', 'closeTicket'])){
+    if($this->existPOST(['id', 'ticketStatus', 'priority', 'group', 'category', 'subcategory', 'description', 'closeTicket'])){
       
       $id = $this->getPost('id');
       $ticketStatus = $this->getPost('ticketStatus');
       $priority = $this->getPost('priority');
       $category = $this->getPost('category');
+      $group = $this->getPost('group');
       $subcategory = $this->getPost('subcategory');
       $description = $this->getPost('description');
       $closeTicket = $this->getPost('closeTicket');
@@ -236,9 +247,9 @@ class Tickets extends SessionController{
       }else{
         $ticket = new TicketModel();
         $ticket->setId($id);
+        $ticket->setGroupId($group);
         $ticket->setTicketStatusId($ticketStatus);
         $ticket->setPriority($priority);
-        $ticket->setCategoryId($category);
         $ticket->setSubcategoryId($subcategory);
         $ticket->setModifiedAt(date('Y-m-d H:i:s'));
         if($closeTicket == 'yes'){

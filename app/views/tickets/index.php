@@ -100,6 +100,7 @@ require_once 'views/header.php';
 										<th>Asunto</th>
 										<th>Categoría</th>
 										<th>Subcategoría</th>
+										<th>Grupo</th>
 										<th>Usuario</th>
 										<th>Estado</th>
 										<th>Fecha Creación</th>
@@ -115,6 +116,7 @@ require_once 'views/header.php';
 											<td><?php echo $t->getSubject() ?></td>
 											<td><?php echo $t->getCategory() ?></td>
 											<td><?php echo $t->getSubcategory() ?></td>
+											<td><?php echo $t->getGrupo() ?></td>
 											<td><?php echo $t->getName() ?></td>
 											<td>
 												<span class="badge <?php echo $t->getStatus() == "Cerrado" ? 'bg-danger' : 'bg-primary'; ?>"><?php echo $t->getStatus() ?></span>

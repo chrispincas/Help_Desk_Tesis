@@ -112,7 +112,7 @@ require_once 'views/header.php';
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-12 col-md-6">
+							<div class="col-12 col-md-4">
 								<div class="card">
 									<div class="card-header">
 										<h4>Estado de tickets</h4>
@@ -122,7 +122,7 @@ require_once 'views/header.php';
 									</div>
 								</div>
 							</div>
-							<div class="col-12 col-md-6">
+							<div class="col-12 col-md-8">
 								<div class="card">
 									<div class="card-header">
 										<h4>Asignación de tickets</h4>
