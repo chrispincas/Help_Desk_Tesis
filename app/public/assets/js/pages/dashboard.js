@@ -43,7 +43,6 @@ console.log(series)
 let optionsTicketsGroup = {
 	series: series,
 	chart: {
-		width: 450,
 		type: 'pie',
 	},
 	labels: labels,

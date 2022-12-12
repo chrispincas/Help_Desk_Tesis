@@ -56,19 +56,9 @@
       "role": "Administrador"
     },
     {
-      "site": "users",
-      "access": "private",
-      "role": "Soporte"
-    },
-    {
       "site": "groups",
       "access": "private",
       "role": "Administrador"
-    },
-    {
-      "site": "groups",
-      "access": "private",
-      "role": "Soporte"
     },
     {
       "site": "profile",

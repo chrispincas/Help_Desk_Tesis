@@ -6,6 +6,7 @@
 	$ticketStatus = $this->d['ticketStatus'];
 	$tickets = $this->d['tickets'];
 	$comments = $this->d['comments'];
+	$groups = $this->d['groups'];
 
 	$title = "Ver Ticket";
 	$bodyType = "";
@@ -140,7 +141,7 @@
 											<div class="col-md-12 onlyAdmin">
 												<h5>Reasignar campos</h5>
 											</div>
-											<div class="col-md-3 onlyAdmin">
+											<div class="col-md-4 onlyAdmin">
 												<div class="form-group has-icon-left">
 													<label class="mb-2" for="ticketStatus">Estado de Ticket</label>
 													<div class="position-relative">
@@ -155,7 +156,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="col-md-3 onlyAdmin">
+											<div class="col-md-4 onlyAdmin">
 												<div class="form-group has-icon-left">
 													<label class="mb-2" for="priority">Tipo de impacto</label>
 													<div class="position-relative">
@@ -170,7 +171,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="col-md-3 onlyAdmin">
+											<div class="col-md-4 onlyAdmin">
 												<div class="form-group has-icon-left">
 													<label class="mb-2" for="category">Tipo de servicio</label>
 													<div class="position-relative">
@@ -186,7 +187,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="col-md-3 onlyAdmin">
+											<div class="col-md-4 onlyAdmin">
 												<div class="form-group has-icon-left">
 													<label class="mb-2" for="subcategory">Tipo de requerimiento</label>
 													<div class="position-relative">
@@ -195,6 +196,21 @@
 															<?php if(booleanActualValue($tickets->getSubcategory(),$s->getSubcategory())):?>
 																<option value="<?php echo $s->getId() ?>"><?php echo $s->getSubcategory() ?></option>
 															<?php endif?>
+														<?php endforeach?>
+														</select>
+														<div class="form-control-icon pb-1">
+															<i class="bi bi-card-list"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4 onlyAdmin">
+												<div class="form-group has-icon-left">
+													<label class="mb-2" for="subcategory">Asignación</label>
+													<div class="position-relative">
+														<select name="group" id="group" class="form-control form-select"  required>
+														<?php foreach($groups as $g):?>
+															<option <?php actualValue($tickets->getGrupo(),$g->getGroup())?>  value="<?php echo $g->getId() ?>"><?php echo $g->getGroup() ?></option>
 														<?php endforeach?>
 														</select>
 														<div class="form-control-icon pb-1">

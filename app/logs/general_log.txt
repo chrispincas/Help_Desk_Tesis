@@ -1,0 +1,73 @@
+[11-Dec-2022 21:45:41 America/Bogota] userModel::get->Failed:  no se encuentra en sistema
+[11-Dec-2022 21:48:54 America/Bogota] Controller::existGET-> No existe el parametro crypt_id
+[11-Dec-2022 21:49:06 America/Bogota] Controller::existGET-> No existe el parametro crypt_id
+[11-Dec-2022 21:49:51 America/Bogota] Controller::existGET-> No existe el parametro crypt_id
+[11-Dec-2022 21:49:53 America/Bogota] Controller::existGET-> No existe el parametro crypt_id
+[11-Dec-2022 21:50:25 America/Bogota] Controller::existGET-> No existe el parametro crypt_id
+[11-Dec-2022 22:14:20 America/Bogota] PHP Fatal error:  Uncaught Error: Class 'GroupModel' not found in /var/www/html/controllers/tickets.php:31
+Stack trace:
+#0 /var/www/html/libs/app.php(27): Tickets->__construct()
+#1 /var/www/html/index.php(15): App->__construct()
+#2 {main}
+  thrown in /var/www/html/controllers/tickets.php on line 31
+[11-Dec-2022 22:15:34 America/Bogota] Controller::existGET-> No existe el parametro crypt_id
+[11-Dec-2022 22:18:15 America/Bogota] Controller::existGET-> No existe el parametro crypt_id
+[11-Dec-2022 22:18:34 America/Bogota] PHP Fatal error:  Uncaught Error: Call to undefined method TicketRelationModel::getGroupId() in /var/www/html/views/tickets/show.php:213
+Stack trace:
+#0 /var/www/html/libs/view.php(13): require()
+#1 /var/www/html/controllers/tickets.php(95): View->render('tickets/show', Array)
+#2 /var/www/html/libs/app.php(45): Tickets->showTicket()
+#3 /var/www/html/index.php(15): App->__construct()
+#4 {main}
+  thrown in /var/www/html/views/tickets/show.php on line 213
+[11-Dec-2022 22:18:37 America/Bogota] PHP Fatal error:  Uncaught Error: Call to undefined method TicketRelationModel::getGroupId() in /var/www/html/views/tickets/show.php:213
+Stack trace:
+#0 /var/www/html/libs/view.php(13): require()
+#1 /var/www/html/controllers/tickets.php(95): View->render('tickets/show', Array)
+#2 /var/www/html/libs/app.php(45): Tickets->showTicket()
+#3 /var/www/html/index.php(15): App->__construct()
+#4 {main}
+  thrown in /var/www/html/views/tickets/show.php on line 213
+[11-Dec-2022 22:19:18 America/Bogota] PHP Fatal error:  Uncaught Error: Call to undefined method GroupModel::getGrupo() in /var/www/html/views/tickets/show.php:213
+Stack trace:
+#0 /var/www/html/libs/view.php(13): require()
+#1 /var/www/html/controllers/tickets.php(95): View->render('tickets/show', Array)
+#2 /var/www/html/libs/app.php(45): Tickets->showTicket()
+#3 /var/www/html/index.php(15): App->__construct()
+#4 {main}
+  thrown in /var/www/html/views/tickets/show.php on line 213
+[11-Dec-2022 22:19:44 America/Bogota] Controller::existGET-> No existe el parametro crypt_id
+[11-Dec-2022 22:20:25 America/Bogota] Controller::existGET-> No existe el parametro crypt_id
+[11-Dec-2022 22:23:15 America/Bogota] Controller::existGET-> No existe el parametro crypt_id
+[11-Dec-2022 22:23:38 America/Bogota] Controller::existGET-> No existe el parametro crypt_id
+[11-Dec-2022 22:23:44 America/Bogota] Controller::existGET-> No existe el parametro crypt_id
+[11-Dec-2022 22:32:08 America/Bogota] ticketModel::save->PDOException PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /var/www/html/models/ticketmodel.php:51
+Stack trace:
+#0 /var/www/html/models/ticketmodel.php(51): PDOStatement->execute()
+#1 /var/www/html/controllers/tickets.php(174): TicketModel->save()
+#2 /var/www/html/libs/app.php(45): Tickets->newTicket()
+#3 /var/www/html/index.php(15): App->__construct()
+#4 {main}
+[11-Dec-2022 22:34:21 America/Bogota] Controller::existGET-> No existe el parametro crypt_id
+[11-Dec-2022 22:39:13 America/Bogota] 3 203138
+[11-Dec-2022 22:39:13 America/Bogota] ticketModel::getAll->PDOException PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /var/www/html/models/ticketrelationmodel.php:129
+Stack trace:
+#0 /var/www/html/models/ticketrelationmodel.php(129): PDOStatement->execute()
+#1 /var/www/html/controllers/tickets.php(46): TicketRelationModel->getAllRelationByGroupId('3', '203138')
+#2 /var/www/html/libs/app.php(54): Tickets->render()
+#3 /var/www/html/index.php(15): App->__construct()
+#4 {main}
+[11-Dec-2022 22:39:15 America/Bogota] 3 203138
+[11-Dec-2022 22:39:15 America/Bogota] ticketModel::getAll->PDOException PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /var/www/html/models/ticketrelationmodel.php:129
+Stack trace:
+#0 /var/www/html/models/ticketrelationmodel.php(129): PDOStatement->execute()
+#1 /var/www/html/controllers/tickets.php(46): TicketRelationModel->getAllRelationByGroupId('3', '203138')
+#2 /var/www/html/libs/app.php(54): Tickets->render()
+#3 /var/www/html/index.php(15): App->__construct()
+#4 {main}
+[11-Dec-2022 22:43:28 America/Bogota] Controller::existGET-> No existe el parametro crypt_id
+[11-Dec-2022 22:44:30 America/Bogota] Controller::existGET-> No existe el parametro crypt_id
+[11-Dec-2022 22:46:13 America/Bogota] Controller::existGET-> No existe el parametro crypt_id
+[11-Dec-2022 22:48:03 America/Bogota] Controller::existGET-> No existe el parametro crypt_id
+[11-Dec-2022 22:50:31 America/Bogota] userModel::get->Failed:  no se encuentra en sistema
+[11-Dec-2022 22:50:31 America/Bogota] userModel::get->Failed:  no se encuentra en sistema
